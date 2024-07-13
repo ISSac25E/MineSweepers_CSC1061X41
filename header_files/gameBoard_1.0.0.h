@@ -1,8 +1,15 @@
 #ifndef gameBoard_h
 #define gameBoard_h
 
+#define UNCOVERED_BLOCK 0
+#define COVERED_BLOCK 1
+
 #include <iostream>
 #include <stdint.h>
+
+#include "linkedList_1.1.0.h"
+
+using namespace std;
 
 class gameBoard
 {
@@ -56,6 +63,25 @@ public:
     if inputted index is out of range, 'validBlock' will be flagged
   */
   block getBlock(uint16_t blockIndex);
+
+private:
+  bool _firstBlockState;
+  linkedList _uncoveredBlocks;
+  linkedList _uncoveredBlocksExclusions;
+
+  struct
+  {
+    uint16_t *list = nullptr;
+    uint16_t size = 0;
+  } _bombList;
+
+  class flagList_class
+  {
+  public:
+  private:
+    const uint16_t _subList_size = 10; // too much can lead to wasted space, too little leads to inefficient memory
+  };
+  flagList_class _flagList;
 };
 
 #endif // #define gameBoard_h

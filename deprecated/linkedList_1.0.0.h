@@ -10,6 +10,9 @@ template <size_t NodeSize>
 class linkedList
 {
 public:
+  /*
+    safely deallocates entire list.
+  */
   ~linkedList();
 
   /*

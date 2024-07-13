@@ -1,14 +1,8 @@
 #include <iostream>
 using namespace std;
 
-int grip()
-{
-  int x = 2;
-  x *= 10;
-  return x;
-}
+#error "COMPILE AND RUN 'main.cpp' IN 'prototype_project/'"
 
 int main()
 {
-  cout << "hello " << grip() << endl;
 }
