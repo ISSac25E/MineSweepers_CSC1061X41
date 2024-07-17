@@ -43,6 +43,7 @@ public:
 
   /*
     insert a list of data at a specified location.
+    if index is greater than list size, elements will be added at the end
     inserting data in bulk is much faster than one at a time
 
     inputs: (uint16_t) index to store at, (T *) data list, (uint16_t) list length (elements, not bytes)
@@ -61,7 +62,7 @@ public:
 
   /*
     returns actual pointer to element
-    element can read and modified
+    element can be read and modified
 
     inputs: (uint16_t) index
     ouput: (T*) element pointer
@@ -76,6 +77,9 @@ public:
   uint16_t getListLength();
 
 private:
+  /*
+    useful struct to convert a long index into a compound index of a node and sub-index
+  */
   struct ListIndex_struct
   {
     uint16_t node;
@@ -90,11 +94,14 @@ private:
     outputs: (ListIndex_struct) node and subIndex
   */
   ListIndex_struct _getListIndex(uint16_t index);
-  linkedList _subLists;
+
+  void _getNextSection(T* dataReturn, uint8_t indexOffset, uint8_t subListOffset);
+
+  linkedList _subLists_ll;
 
   uint16_t _listLength;
 
-  uint8_t _subListSize;
+  uint8_t _subListLength;
 };
 
 #endif // #ifndef hybridList_h
