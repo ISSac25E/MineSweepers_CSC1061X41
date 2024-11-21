@@ -1,4 +1,9 @@
 /*
+  Amir Gorkovchenko - CSC1061X41 Capstone
+
+  simple linked-list implementation that allows for nodes of various sizes AND data types.
+  keeping track of datatypes throughout nodes must be self-implemented by user
+
   changes from v1.0.0
     - not using templates for node sizes.
       it may have had compile-time type safety but it create a serious limitation when it came to
@@ -10,7 +15,7 @@
 #define linkedList_h
 
 #include <iostream>
-#include <stdint.h>
+#include <stdint.h> // << for 'uint8_t'
 #include <cstring>
 using namespace std;
 
@@ -92,5 +97,7 @@ private:
 
   base_node _headNode;
 };
+
+#include "linkedList_impl.cpp" // this can only be included once
 
 #endif // #ifndef linkedList_h

@@ -1,88 +1,50 @@
 #include "../header_files/linkedList_1.1.0.h"
 
+/* initialize 'base_node' struct */
 linkedList::base_node::base_node() : nextNode(nullptr) {}
 
+/* initialize 'node' struct */
 linkedList::node::node() : length(0) {}
 
 linkedList::~linkedList()
 {
+  /* destroy each node using 'deleteNode' method */
   base_node *temp = &_headNode;
 
   while (temp->nextNode)
     deleteNode(0);
 }
 
-template <typename T>
-bool linkedList::addNode(uint16_t index, T *data, int16_t length)
-{
-  if (length <= 0)
-    return false; // invalid data length!
-
-  uint8_t *newByteNode = new (nothrow) uint8_t[sizeof(node) + length];
-  if (!newByteNode)
-    return false;
-
-  node *newNode = reinterpret_cast<node *>(newByteNode);
-  newNode->length = length;
-
-  memcpy(newByteNode + sizeof(node), data, length); // << write to the bytes trailing the node
-
-  base_node *storeNode = &_headNode;
-
-  for (uint16_t nodeCnt = 0; nodeCnt < index && storeNode->nextNode; nodeCnt++)
-    storeNode = storeNode->nextNode;
-
-  newNode->nextNode = storeNode->nextNode;
-  storeNode->nextNode = newNode;
-  return true;
-}
-
 void linkedList::deleteNode(uint16_t index)
 {
   base_node *temp = &_headNode;
 
+  /* located target node: */
   for (uint16_t nodeCnt = 0; nodeCnt < index && temp->nextNode; nodeCnt++)
     temp = temp->nextNode;
 
-  if (temp->nextNode)
+  if (temp->nextNode) // validate if is valid node
   {
-    uint8_t *deleteNode = reinterpret_cast<uint8_t *>(temp->nextNode);
-    temp->nextNode = temp->nextNode->nextNode;
+    uint8_t *deleteNode = reinterpret_cast<uint8_t *>(temp->nextNode); // get target node as byte array to delete instead of struct (originally allocated as byte array)
+    temp->nextNode = temp->nextNode->nextNode;                         // relink list
 
-    delete[] deleteNode;
+    delete[] deleteNode; // << delete as list
   }
-}
-
-template <typename T>
-T *linkedList::getNodeData(uint16_t index)
-{
-  base_node *temp = &_headNode;
-
-  for (uint16_t nodeCnt = 0; nodeCnt < index && temp->nextNode; nodeCnt++)
-    temp = temp->nextNode;
-
-  if (temp->nextNode)
-  {
-    uint8_t *byteData = reinterpret_cast<uint8_t *>(temp->nextNode);
-    byteData += sizeof(node);
-
-    return reinterpret_cast<T *>(byteData);
-  }
-  return nullptr;
 }
 
 int16_t linkedList::getNodeSize(uint16_t index)
 {
   base_node *temp = &_headNode;
 
+  /* located target node: */
   for (uint16_t nodeCnt = 0; nodeCnt < index && temp->nextNode; nodeCnt++)
     temp = temp->nextNode;
 
-  if (temp->nextNode)
+  if (temp->nextNode) // validate if is valid node
   {
-    return temp->nextNode->length;
+    return temp->nextNode->length; // return stored length
   }
-  return -1;
+  return -1; // return invalid node
 }
 
 uint16_t linkedList::nodeCount()
@@ -90,6 +52,9 @@ uint16_t linkedList::nodeCount()
   base_node *temp = &_headNode;
   uint16_t nodeCnt = 0;
 
+  /*
+    run through entire linked list, counting each node
+  */
   while (temp->nextNode)
   {
     temp = temp->nextNode;

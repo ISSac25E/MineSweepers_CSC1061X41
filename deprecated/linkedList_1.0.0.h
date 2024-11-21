@@ -2,7 +2,7 @@
 #define linkedList_h
 
 #include <iostream>
-#include <stdint.h>
+#include <stdint.h> // << for 'uint8_t'
 #include <cstring>
 using namespace std;
 

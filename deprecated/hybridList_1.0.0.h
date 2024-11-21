@@ -18,7 +18,7 @@
 #define hybridList_h
 
 #include <iostream>
-#include <stdint.h>
+#include <stdint.h> // << for 'uint8_t'
 #include <cstring>
 
 #include "linkedList_1.1.0.h"

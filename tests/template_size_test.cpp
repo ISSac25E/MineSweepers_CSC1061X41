@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stdint.h>
+#include <stdint.h> // << for 'uint8_t'
 
 using namespace std;
 
